@@ -1,8 +1,22 @@
 import todoLogo from "../assets/todoistlog.png";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import backgroundImage from "../assets/todologin logo.png";
+import { useAuth } from "../common/auth";
 
 export default function Login() {
+  const { signIn } = useAuth();
+  const navigate = useNavigate();
+  async function authenticateUser(event: React.SyntheticEvent) {
+    const { email, password } = event.target as typeof event.target & {
+      email: HTMLInputElement;
+      password: HTMLInputElement;
+    };
+    event.preventDefault();
+    const user = await signIn(email.value, password.value);
+    if (user) {
+      navigate("/main");
+    }
+  }
   return (
     <>
       <header className="p-6">
@@ -89,7 +103,7 @@ export default function Login() {
               </ul>
             </section>
             <section>
-              <form>
+              <form onSubmit={authenticateUser}>
                 <label htmlFor="" className="block text-lg text-[#1F1F1F] ">
                   Email
                   <input
@@ -111,12 +125,7 @@ export default function Login() {
                   />
                 </label>
 
-                <button
-                  className="btn2 mt-5 w-[75%]"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Log in
-                </button>
+                <button className="btn2 mt-5 w-[75%]">Log in</button>
               </form>
             </section>
             <ul className="p-4">

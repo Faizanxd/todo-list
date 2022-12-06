@@ -4,9 +4,11 @@ import {
   Route,
   RouterProvider,
 } from "react-router-dom";
+import { AuthProvider } from "./common/auth";
 import Default from "./pages/default";
 import Login from "./pages/login";
 import Signup from "./pages/signup";
+import Todo from "./pages/todo";
 
 function AppRouter() {
   const router = createBrowserRouter(
@@ -15,7 +17,7 @@ function AppRouter() {
         <Route path="/" element={<Default />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/main" element={""}></Route>
+        <Route path="/main" element={<Todo />}></Route>
       </>
     )
   );
@@ -23,7 +25,11 @@ function AppRouter() {
 }
 
 function App() {
-  return <AppRouter />;
+  return (
+    <AuthProvider>
+      <AppRouter />
+    </AuthProvider>
+  );
 }
 
 export default App;
