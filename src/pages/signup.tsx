@@ -111,12 +111,7 @@ export default function Signup() {
                   />
                 </label>
 
-                <button
-                  className="btn2 mt-5 w-[75%]"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Log in
-                </button>
+                <button className="btn2 mt-5 w-[75%]">Log in</button>
               </form>
             </section>
             <ul className="p-4">

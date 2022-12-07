@@ -6,7 +6,7 @@ import { useAuth } from "../common/auth";
 export default function Login() {
   const { signIn } = useAuth();
   const navigate = useNavigate();
-  async function authenticateUser(event: React.SyntheticEvent) {
+  async function authentication(event: React.SyntheticEvent) {
     const { email, password } = event.target as typeof event.target & {
       email: HTMLInputElement;
       password: HTMLInputElement;
@@ -14,7 +14,7 @@ export default function Login() {
     event.preventDefault();
     const user = await signIn(email.value, password.value);
     if (user) {
-      navigate("/main");
+      navigate("/todo");
     }
   }
   return (
@@ -103,13 +103,13 @@ export default function Login() {
               </ul>
             </section>
             <section>
-              <form onSubmit={authenticateUser}>
+              <form onSubmit={authentication}>
                 <label htmlFor="" className="block text-lg text-[#1F1F1F] ">
                   Email
                   <input
                     type="email"
                     name="Email Address"
-                    id="xd"
+                    id="email"
                     placeholder="Enter your email..."
                     className="block w-[75%] rounded-md border-2 border-neutral-100 p-2"
                   />
@@ -119,7 +119,7 @@ export default function Login() {
                   <input
                     type="password"
                     name="Password"
-                    id=""
+                    id="password"
                     placeholder="Enter your password"
                     className="block w-[75%] rounded-md border-2 border-neutral-100 p-2"
                   />
