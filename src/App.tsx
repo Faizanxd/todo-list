@@ -11,19 +11,18 @@ import Login from "./pages/login";
 import Signup from "./pages/signup";
 import Todo from "./pages/todo";
 import { Navigate } from "react-router-dom";
-import Tasks from "./components/tasks";
 
 function ProtectedRoute({ children }: { children: React.ReactElement }) {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
 
-  if (!user) {
+  if (!user && !loading) {
     return <Navigate to="/login" />;
   }
   return children;
 }
 
 function AppRouter() {
-  const { loading } = useAuth();
+  const { loading, user } = useAuth();
   const router = createBrowserRouter(
     createRoutesFromElements(
       <>
@@ -38,14 +37,12 @@ function AppRouter() {
             </ProtectedRoute>
           }
         >
-          <Route path="/todo" element={<Todo />}>
-            <Route index element={<Tasks />} />
-          </Route>
+          <Route index element={<Todo />} />
         </Route>
       </>
     )
   );
-  return loading ? (
+  return loading && !user ? (
     <section className="grid h-screen w-screen place-items-center">
       Loading..
     </section>

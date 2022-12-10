@@ -1,8 +1,21 @@
 import todoLogo from "../assets/todoistlog.png";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import backgroundImage from "../assets/todologin logo.png";
+import { useAuth } from "../common/auth";
 
 export default function Signup() {
+  const { signUp } = useAuth();
+
+  const navigate = useNavigate();
+  async function register(event: React.SyntheticEvent) {
+    event.preventDefault();
+    const { email, password } = event.target as typeof event.target & {
+      email: HTMLInputElement;
+      password: HTMLInputElement;
+    };
+    const user = await signUp(email.value, password.value);
+    navigate("/login");
+  }
   return (
     <>
       <header className="p-6">
@@ -89,13 +102,13 @@ export default function Signup() {
               </ul>
             </section>
             <section>
-              <form>
+              <form onSubmit={register}>
                 <label htmlFor="" className="block text-lg text-[#1F1F1F] ">
                   Email
                   <input
                     type="email"
                     name="Email Address"
-                    id="xd"
+                    id="email"
                     placeholder="Enter your email..."
                     className="block w-[75%] rounded-md border-2 border-neutral-100 p-2"
                   />
@@ -105,12 +118,11 @@ export default function Signup() {
                   <input
                     type="password"
                     name="Password"
-                    id=""
+                    id="password"
                     placeholder="Enter your password"
                     className="block w-[75%] rounded-md border-2 border-neutral-100 p-2"
                   />
                 </label>
-
                 <button className="btn2 mt-5 w-[75%]">Log in</button>
               </form>
             </section>

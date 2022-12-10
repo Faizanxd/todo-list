@@ -68,7 +68,7 @@ function useProvideAuth() {
       return user;
     });
 
-  const signOutUser = signOut(auth);
+  const signOutUser = () => signOut(auth);
 
   return {
     signUp,

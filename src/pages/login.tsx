@@ -2,20 +2,25 @@ import todoLogo from "../assets/todoistlog.png";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import backgroundImage from "../assets/todologin logo.png";
 import { useAuth } from "../common/auth";
+import { useEffect } from "react";
 
 export default function Login() {
-  const { signIn } = useAuth();
+  const { signIn, user } = useAuth();
   const navigate = useNavigate();
+  useEffect(() => {
+    if (user) {
+      navigate("/todo");
+    }
+  }, [user]);
+
   async function authentication(event: React.SyntheticEvent) {
+    event.preventDefault();
     const { email, password } = event.target as typeof event.target & {
       email: HTMLInputElement;
       password: HTMLInputElement;
     };
-    event.preventDefault();
+
     const user = await signIn(email.value, password.value);
-    if (user) {
-      navigate("/todo");
-    }
   }
   return (
     <>
