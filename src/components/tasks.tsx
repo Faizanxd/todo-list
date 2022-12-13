@@ -1,6 +1,14 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
+import Overlay from "./overlay";
 
 export default function Tasks() {
+  const overlayRef = useRef<any>();
+  const toggleRef = useRef<any>();
+
+  const toggleOverlay = () => {
+    overlayRef.current.classList.toggle("hidden");
+    toggleRef.current.classList.toggle("hidden");
+  };
   const date = new Date();
   function currentDay() {
     const day = date.getDate();
@@ -39,31 +47,62 @@ export default function Tasks() {
   return (
     <>
       <section className="">
-        <section className="grid grid-cols-[500px_500px] py-8">
-          <section className="ml-8 flex  gap-2">
+        <section className="flex justify-items-end gap-[650px] py-6">
+          <section className="ml-[200px] flex gap-2">
             <h1 className="text-2xl font-bold text-[#1F1F1F]">Today</h1>
             <h2 className="py-2 text-gray-400">{todayDate}</h2>
           </section>
-          <section className="btn5 flex py-2">
+          <section className="">
+            <a href="" className="btn5 flex p-[4px]">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                className="h-6 w-6"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75"
+                />
+              </svg>
+              <h1>View</h1>
+            </a>
+          </section>
+        </section>
+        <section className="" ref={overlayRef}>
+          <button
+            className="btn6 ml-[200px] flex gap-2 "
+            onClick={toggleOverlay}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
               stroke-width="1.5"
               stroke="currentColor"
-              className="h-6 w-6"
+              className="h-6 w-6 rounded-full bg-[#C84C3F] text-white "
             >
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75"
+                d="M12 6v12m6-6H6"
               />
             </svg>
-            <h1>View</h1>
+            <h1 className=" ">Add task</h1>
+          </button>
+          <section className="ml-[500px]">
+            <img src="/src/assets/add task.png" alt="add task" />
+            <span className="flex text-lg font-semibold">
+              Have a marvelous day off, <h1> User!</h1>
+            </span>
           </section>
         </section>
-        <section></section>
-        <section></section>
+        <section ref={toggleRef} className="hidden">
+          <Overlay />
+        </section>
       </section>
     </>
   );

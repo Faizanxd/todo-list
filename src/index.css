@@ -33,3 +33,11 @@
   .btn5{
     @apply cursor-pointer rounded-md tracking-wider text-gray-400 transition ease-in-out hover:bg-gray-300 hover:text-black
   }
+
+  .btn6{
+    @apply cursor-pointer tracking-wider transition duration-100 ease-out hover:text-[#C84C3F] text-gray-400
+  }
+
+  .btn7{
+    @apply cursor-pointer rounded-lg tracking-wider p-2 transition duration-300 ease-out 
+  }

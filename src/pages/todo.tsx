@@ -18,7 +18,7 @@ export default function Todo() {
             <nav>
               <section className="grid grid-cols-[auto_auto] bg-[#C84C3F] text-white">
                 <section>
-                  <ul className="ml-4 flex justify-start gap-2 py-4">
+                  <ul className="ml-4 flex justify-start gap-2 py-2">
                     <li>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -71,7 +71,7 @@ export default function Todo() {
                 </section>
 
                 <section className=" ">
-                  <ul className="mr-4 flex justify-end gap-2 py-4">
+                  <ul className="mr-4 flex justify-end gap-2 py-2">
                     <li>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
