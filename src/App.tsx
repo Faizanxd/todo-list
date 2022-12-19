@@ -11,6 +11,7 @@ import Login from "./pages/login";
 import Signup from "./pages/signup";
 import Todo from "./pages/todo";
 import { Navigate } from "react-router-dom";
+import Loader from "./components/loader";
 
 function ProtectedRoute({ children }: { children: React.ReactElement }) {
   const { user, loading } = useAuth();
@@ -43,9 +44,9 @@ function AppRouter() {
     )
   );
   return loading && !user ? (
-    <section className="grid h-screen w-screen place-items-center">
-      Loading..
-    </section>
+    <div>
+      <Loader />
+    </div>
   ) : (
     <RouterProvider router={router}></RouterProvider>
   );

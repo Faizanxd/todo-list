@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 
-export default function Overlay() {
+export default function Overlay({ toggleOverlay }: any) {
   return (
     <>
       <section className="ml-[200px]  h-[150px] w-[915px] rounded-xl border border-gray-300">
@@ -81,11 +81,20 @@ export default function Overlay() {
           </section>
         </section>
       </section>
-      <section className="ml-[950px] p-2">
-        <button className="btn7 bg-gray-200  hover:bg-gray-400">Cancel</button>
-        <button className="btn7 bg-[#c06c63]  text-white hover:bg-[#C84C3F]">
-          Add Task
-        </button>
+      <section className=" ml-[900px] flex p-2">
+        <div className="p-2">
+          <button
+            className="btn7 bg-gray-200   hover:bg-gray-400"
+            onClick={toggleOverlay}
+          >
+            Cancel
+          </button>
+        </div>
+        <div className="p-2">
+          <button className="btn7 bg-[#c06c63]  text-white hover:bg-[#C84C3F]">
+            Add Task
+          </button>
+        </div>
       </section>
     </>
   );

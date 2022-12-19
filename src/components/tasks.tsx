@@ -5,10 +5,16 @@ export default function Tasks() {
   const overlayRef = useRef<any>();
   const toggleRef = useRef<any>();
 
-  const toggleOverlay = () => {
-    overlayRef.current.classList.toggle("hidden");
-    toggleRef.current.classList.toggle("hidden");
-  };
+  function toggleOverlay() {
+    if (overlayRef.current.classList.contains("hidden")) {
+      overlayRef.current.classList.remove("hidden");
+      toggleRef.current.classList.add("hidden");
+    } else {
+      overlayRef.current.classList.add("hidden");
+      toggleRef.current.classList.remove("hidden");
+    }
+  }
+
   const date = new Date();
   function currentDay() {
     const day = date.getDate();
@@ -101,7 +107,7 @@ export default function Tasks() {
           </section>
         </section>
         <section ref={toggleRef} className="hidden">
-          <Overlay />
+          <Overlay toggleOverlay={toggleOverlay} />
         </section>
       </section>
     </>
