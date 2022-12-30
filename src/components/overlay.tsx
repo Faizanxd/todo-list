@@ -1,6 +1,40 @@
-import { useState, useRef } from "react";
+import {
+  useState,
+  useRef,
+  ChangeEvent,
+  ReactElement,
+  ReactInstance,
+} from "react";
+import { Navigate, useNavigate } from "react-router-dom";
+import { ITask } from "../common/interfaces";
+import TodoTask from "./TodoTask";
 
-export default function Overlay({ toggleOverlay }: any) {
+export default function Overlay({ toggleOverlay, todo, setTodo }: any) {
+  const [task, setTask] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+
+  const navigate = useNavigate();
+  const todoRef = useRef<any>();
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.name === "Task Name") {
+      setTask(e.target.value);
+    } else {
+      setDescription(e.target.value);
+    }
+  };
+
+  const addTask = () => {
+    const newTask = { taskName: task, description: description };
+    setTodo([...todo, newTask]);
+    console.log(todo);
+    if (todo) {
+      toggleOverlay();
+      setTask("");
+      setDescription("");
+    }
+  };
+
   return (
     <>
       <section className="ml-[200px]  h-[150px] w-[915px] rounded-xl border border-gray-300">
@@ -13,6 +47,8 @@ export default function Overlay({ toggleOverlay }: any) {
               placeholder="Task Name"
               className="h-full w-full p-2"
               autoComplete="off"
+              onChange={handleChange}
+              value={task}
             />
           </form>
         </section>
@@ -20,11 +56,13 @@ export default function Overlay({ toggleOverlay }: any) {
           <form action="">
             <input
               type="text"
-              name="Task Name"
+              name="Description"
               id="Task name"
               placeholder="Description"
               className="h-full w-full p-2"
               autoComplete="off"
+              onChange={handleChange}
+              value={description}
             />
           </form>
         </section>
@@ -91,7 +129,10 @@ export default function Overlay({ toggleOverlay }: any) {
           </button>
         </div>
         <div className="p-2">
-          <button className="btn7 bg-[#c06c63]  text-white hover:bg-[#C84C3F]">
+          <button
+            className="btn7 bg-[#c06c63]  pb-2 text-white hover:bg-[#C84C3F]"
+            onClick={addTask}
+          >
             Add Task
           </button>
         </div>

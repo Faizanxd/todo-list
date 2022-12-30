@@ -1,9 +1,20 @@
-import { useState, useRef, useEffect } from "react";
+import {
+  useState,
+  useRef,
+  useEffect,
+  ReactElement,
+  ReactHTMLElement,
+  ReactEventHandler,
+  ReactInstance,
+} from "react";
+import { ITask } from "../common/interfaces";
 import Overlay from "./overlay";
+import TodoTask from "./TodoTask";
 
 export default function Tasks() {
   const overlayRef = useRef<any>();
   const toggleRef = useRef<any>();
+  const bruhRef = useRef<any>();
 
   function toggleOverlay() {
     if (overlayRef.current.classList.contains("hidden")) {
@@ -46,10 +57,29 @@ export default function Tasks() {
   const todayDate =
     days[date.getDay()] + " " + currentDay() + " " + months[date.getMonth()];
 
+  const addOverlay = () => {
+    toggleOverlay();
+    if (!todo) {
+      bruhRef.current.classList.remove("hidden");
+    } else {
+      bruhRef.current.classList.add("hidden");
+    }
+  };
+
   const [time, setTime] = useState(new Date().toLocaleTimeString());
   setInterval(() => {
     setTime(new Date().toLocaleTimeString());
   }, 1000);
+
+  const [todo, setTodo] = useState<ITask[]>([]);
+  const completeTask = (taskNameToDelete: string): void => {
+    setTodo(
+      todo.filter((task) => {
+        return task.taskName !== taskNameToDelete;
+      })
+    );
+  };
+
   return (
     <>
       <section className="">
@@ -80,8 +110,8 @@ export default function Tasks() {
         </section>
         <section className="" ref={overlayRef}>
           <button
-            className="btn6 ml-[200px] flex gap-2 "
-            onClick={toggleOverlay}
+            className="btn6 ml-[200px] flex gap-2 pb-2 "
+            onClick={addOverlay}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -97,9 +127,9 @@ export default function Tasks() {
                 d="M12 6v12m6-6H6"
               />
             </svg>
-            <h1 className=" ">Add task</h1>
+            <h1 className="">Add task</h1>
           </button>
-          <section className="ml-[500px]">
+          <section className="ml-[500px]" ref={bruhRef}>
             <img src="/src/assets/add task.png" alt="add task" />
             <span className="flex text-lg font-semibold">
               Have a marvelous day off, <h1> User!</h1>
@@ -107,8 +137,17 @@ export default function Tasks() {
           </section>
         </section>
         <section ref={toggleRef} className="hidden">
-          <Overlay toggleOverlay={toggleOverlay} />
+          <Overlay
+            toggleOverlay={toggleOverlay}
+            todo={todo}
+            setTodo={setTodo}
+          />
         </section>
+      </section>
+      <section className="ml-[200px] mr-[830px] border-t-2 pt-10">
+        {todo.map((task: ITask, key: number) => (
+          <TodoTask key={key} task={task} completeTask={completeTask} />
+        ))}
       </section>
     </>
   );
